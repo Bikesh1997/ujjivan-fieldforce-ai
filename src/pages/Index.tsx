@@ -13,7 +13,7 @@ const Index = () => {
             <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <Target className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">Ujjivan Sales</span>
+            <span className="text-xl font-bold text-foreground">AU Sales</span>
           </div>
           <Link to="/auth">
             <Button size="sm">Sign In</Button>
@@ -144,7 +144,7 @@ const Index = () => {
             Ready to Accelerate Your Sales?
           </h2>
           <p className="text-muted-foreground text-lg mb-6 max-w-2xl mx-auto">
-            Join Ujjivan's digital transformation. Empower your field teams with intelligent tools designed for modern banking operations.
+            Join AU's digital transformation. Empower your field teams with intelligent tools designed for modern banking operations.
           </p>
           <Link to="/auth">
             <Button size="lg" className="gap-2">
@@ -162,10 +162,10 @@ const Index = () => {
               <div className="h-6 w-6 rounded-lg bg-gradient-primary flex items-center justify-center">
                 <Target className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold text-foreground">Ujjivan Sales</span>
+              <span className="font-semibold text-foreground">AU Sales</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2025 Ujjivan Small Finance Bank. Powered by TechBulls SoftTech.
+              © 2025 AU Small Finance Bank. Powered by TechBulls SoftTech.
             </p>
           </div>
         </div>

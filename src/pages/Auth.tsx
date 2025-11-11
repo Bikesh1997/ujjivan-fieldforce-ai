@@ -25,7 +25,7 @@ const Auth = () => {
           <p className="text-sm text-muted-foreground">
             {isLogin
               ? "Sign in to access your dashboard"
-              : "Join Ujjivan's digital sales platform"}
+              : "Join AU's digital sales platform"}
           </p>
         </div>
 
@@ -88,7 +88,7 @@ const Auth = () => {
 
         <div className="mt-8 pt-6 border-t border-border">
           <p className="text-xs text-center text-muted-foreground">
-            Powered by Ujjivan Small Finance Bank
+            Powered by AU Small Finance Bank
             <br />
             Developed by TechBulls SoftTech Pvt. Ltd.
           </p>
