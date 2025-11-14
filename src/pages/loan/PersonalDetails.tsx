@@ -84,7 +84,13 @@ export const PersonalDetails = () => {
             value={formData.pincode}
             onChange={(e) => handleInputChange("pincode", e.target.value.replace(/\D/g, ""))}
             placeholder="Enter 6-digit pincode"
-            className={errors.pincode ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+              formData.pincode.length === 0
+                ? "border-input"
+                : errors.pincode
+                ? "border-destructive bg-destructive/5"
+                : "border-success bg-success/5"
+            }`}
           />
           {errors.pincode && <p className="text-sm text-destructive">{errors.pincode}</p>}
         </div>
@@ -99,7 +105,13 @@ export const PersonalDetails = () => {
             value={formData.mobile}
             onChange={(e) => handleInputChange("mobile", e.target.value.replace(/\D/g, ""))}
             placeholder="Enter 10-digit mobile number"
-            className={errors.mobile ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+              formData.mobile.length === 0
+                ? "border-input"
+                : errors.mobile
+                ? "border-destructive bg-destructive/5"
+                : "border-success bg-success/5"
+            }`}
           />
           {errors.mobile && <p className="text-sm text-destructive">{errors.mobile}</p>}
         </div>
@@ -121,20 +133,27 @@ export const PersonalDetails = () => {
             }}
             placeholder="DD/MM/YYYY"
             maxLength={10}
-            className={errors.dob ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+              formData.dob.length === 0
+                ? "border-input"
+                : errors.dob
+                ? "border-destructive bg-destructive/5"
+                : "border-success bg-success/5"
+            }`}
           />
           {errors.dob && <p className="text-sm text-destructive">{errors.dob}</p>}
         </div>
 
-        <div className="flex items-start space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="terms"
             checked={formData.termsAccepted}
             onCheckedChange={(checked) =>
               setFormData((prev) => ({ ...prev, termsAccepted: checked as boolean }))
             }
+            className="h-5 w-5"
           />
-          <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+          <Label htmlFor="terms" className="text-sm font-medium cursor-pointer">
             I accept the Terms & Conditions
           </Label>
         </div>
