@@ -174,7 +174,13 @@ export const EmploymentDetails = () => {
             value={formData.monthlySalary}
             onChange={(e) => handleInputChange("monthlySalary", e.target.value.replace(/\D/g, ""))}
             placeholder="Enter monthly salary"
-            className={errors.monthlySalary ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+              formData.monthlySalary.length === 0
+                ? "border-input"
+                : parseFloat(formData.monthlySalary) > 0
+                ? "border-success bg-success/5"
+                : "border-destructive bg-destructive/5"
+            }`}
           />
           {errors.monthlySalary && <p className="text-sm text-destructive">{errors.monthlySalary}</p>}
         </div>
