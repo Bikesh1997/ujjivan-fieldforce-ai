@@ -17,70 +17,76 @@ export const CustomiseLoan = () => {
   const emi = Math.round(loanAmount / 30);
 
   return (
-    <StepContainer
-      title="Customise Your Loan"
-      subtitle="Adjust your loan amount and select disbursement date"
-    >
-      <div className="space-y-6">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <Label>Loan Amount</Label>
-            <span className="text-2xl font-bold text-primary">₹{loanAmount.toLocaleString()}</span>
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 overflow-y-auto pt-20 pb-32">
+        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-8">
+          <div className="space-y-3 text-center">
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">Customise Your Loan</h1>
+            <p className="text-muted-foreground text-base leading-relaxed">Adjust your loan amount and select disbursement date</p>
           </div>
-          <Slider
-            value={[loanAmount]}
-            onValueChange={(value) => setLoanAmount(value[0])}
-            max={maxAmount}
-            min={10000}
-            step={5000}
-            className="w-full"
-          />
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>₹10,000</span>
-            <span>₹{maxAmount.toLocaleString()}</span>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Disbursement Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal"
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : "Select date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                disabled={(date) => date < new Date()}
-                initialFocus
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <Label>Loan Amount</Label>
+                <span className="text-2xl font-bold text-primary">₹{loanAmount.toLocaleString()}</span>
+              </div>
+              <Slider
+                value={[loanAmount]}
+                onValueChange={(value) => setLoanAmount(value[0])}
+                max={maxAmount}
+                min={10000}
+                step={5000}
+                className="w-full"
               />
-            </PopoverContent>
-          </Popover>
-        </div>
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>₹10,000</span>
+                <span>₹{maxAmount.toLocaleString()}</span>
+              </div>
+            </div>
 
-        <div className="bg-secondary/20 p-4 rounded-2xl space-y-2">
-          <h3 className="font-semibold">EMI Preview</h3>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Monthly EMI</span>
-            <span className="font-bold">₹{emi.toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Tenure</span>
-            <span className="font-bold">30 months</span>
+            <div className="space-y-2">
+              <Label>Disbursement Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal h-12 rounded-2xl"
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : "Select date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => date < new Date()}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="bg-secondary/20 p-4 rounded-2xl space-y-2">
+              <h3 className="font-semibold">EMI Preview</h3>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Monthly EMI</span>
+                <span className="font-bold">₹{emi.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Tenure</span>
+                <span className="font-bold">30 months</span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <Button size="lg" onClick={() => navigate("/loan/confirm-details")} className="w-full">
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 p-6 bg-background border-t border-border">
+        <Button size="lg" onClick={() => navigate("/loan/confirm-details")} className="w-full h-12 rounded-2xl">
           Next
         </Button>
       </div>
-    </StepContainer>
+    </div>
   );
 };
