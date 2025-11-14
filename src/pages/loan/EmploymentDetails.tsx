@@ -153,13 +153,14 @@ export const EmploymentDetails = () => {
           {errors.officialEmail && <p className="text-sm text-destructive">{errors.officialEmail}</p>}
         </div>
 
-        <div className="flex items-start space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="noOfficialEmail"
             checked={formData.noOfficialEmail}
             onCheckedChange={(checked) => handleInputChange("noOfficialEmail", checked as boolean)}
+            className="h-5 w-5"
           />
-          <Label htmlFor="noOfficialEmail" className="text-sm leading-relaxed cursor-pointer">
+          <Label htmlFor="noOfficialEmail" className="text-sm font-medium cursor-pointer">
             I don't have official email ID
           </Label>
         </div>
