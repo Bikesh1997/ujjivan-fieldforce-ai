@@ -21,36 +21,36 @@ export const ConfirmDetails = () => {
       subtitle="Review your loan information"
     >
       <div className="space-y-6">
-        <div className="bg-secondary/20 p-4 rounded-2xl space-y-3">
+        <div className="p-6 rounded-2xl bg-[#6D266D] space-y-3">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Amount Received</span>
-            <span className="font-bold">₹3,00,000</span>
+            <span className="text-white">Amount Received</span>
+            <span className="font-bold text-white">₹3,00,000</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Processing Fee</span>
-            <span className="font-bold">₹8,000</span>
+            <span className="text-white">Processing Fee</span>
+            <span className="font-bold text-white">₹8,000</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">GST</span>
-            <span className="font-bold">₹1,000</span>
+            <span className="text-white">GST</span>
+            <span className="font-bold text-white">₹1,000</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">EMI Protect Plan</span>
-            <span className="font-bold">₹0</span>
+            <span className="text-white">EMI Protect Plan</span>
+            <span className="font-bold text-white">₹0</span>
           </div>
-          <div className="border-t border-border pt-2 mt-2">
+          <div className="border-t border-white/20 pt-2 mt-2">
             <div className="flex justify-between text-lg">
-              <span className="font-semibold">Total Loan Amount</span>
-              <span className="font-bold text-primary">₹3,00,000</span>
+              <span className="font-semibold text-white">Total Loan Amount</span>
+              <span className="font-bold text-white">₹3,00,000</span>
             </div>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">EMI per Month</span>
-            <span className="font-bold">₹10,000</span>
+            <span className="text-white">EMI per Month</span>
+            <span className="font-bold text-white">₹10,000</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Tenure</span>
-            <span className="font-bold">36 months</span>
+            <span className="text-white">Tenure</span>
+            <span className="font-bold text-white">36 months</span>
           </div>
         </div>
 
@@ -67,6 +67,7 @@ export const ConfirmDetails = () => {
                 value={spouseFirstName}
                 onChange={(e) => setSpouseFirstName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
                 placeholder="Enter spouse first name"
+                className="h-12 rounded-2xl border-2"
               />
             </div>
             <div className="space-y-2">
@@ -76,18 +77,20 @@ export const ConfirmDetails = () => {
                 value={spouseLastName}
                 onChange={(e) => setSpouseLastName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
                 placeholder="Enter spouse last name"
+                className="h-12 rounded-2xl border-2"
               />
             </div>
           </CollapsibleContent>
         </Collapsible>
 
-        <div className="flex items-start space-x-2">
+        <div className="flex items-center space-x-3">
           <Checkbox
             id="terms"
             checked={termsAccepted}
             onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+            className="h-5 w-5"
           />
-          <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+          <Label htmlFor="terms" className="text-sm font-medium cursor-pointer">
             I accept the Terms & Conditions
           </Label>
         </div>

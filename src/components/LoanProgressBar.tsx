@@ -8,22 +8,25 @@ export const LoanProgressBar = () => {
   const getCurrentStep = () => {
     const path = location.pathname;
     // First progress bar (4 steps)
-    if (['/loan/personal-details', '/loan/otp'].includes(path)) {
-      return { bar: 1, step: 1 };
-    } else if (path === '/loan/upload-documents') {
-      return { bar: 1, step: 2 };
-    } else if (path === '/loan/personal-address') {
-      return { bar: 1, step: 3 };
-    } else if (path === '/loan/employment-details') {
-      return { bar: 1, step: 4 };
-    }
-    // Second progress bar (4 steps)
-    else if (path === '/loan/customise') {
-      return { bar: 2, step: 1 };
-    } else if (path === '/loan/confirm-details') {
-      return { bar: 2, step: 2 };
-    } else if (path === '/loan/check-address') {
-      return { bar: 2, step: 3 };
+    const bar1Routes = ['/loan/personal-details', '/loan/otp', '/loan/upload-documents', '/loan/personal-address', '/loan/employment-details'];
+    const bar2Routes = ['/loan/customise', '/loan/confirm-details', '/loan/check-address'];
+    
+    if (bar1Routes.includes(path)) {
+      const stepMap: Record<string, number> = {
+        '/loan/personal-details': 1,
+        '/loan/otp': 1,
+        '/loan/upload-documents': 2,
+        '/loan/personal-address': 3,
+        '/loan/employment-details': 4
+      };
+      return { bar: 1, step: stepMap[path] || 1 };
+    } else if (bar2Routes.includes(path)) {
+      const stepMap: Record<string, number> = {
+        '/loan/customise': 1,
+        '/loan/confirm-details': 2,
+        '/loan/check-address': 3
+      };
+      return { bar: 2, step: stepMap[path] || 1 };
     }
     return { bar: 1, step: 1 };
   };
@@ -32,7 +35,21 @@ export const LoanProgressBar = () => {
   const totalSteps = 4;
 
   const getProgressPercentage = () => {
-    return ((currentStep - 1) / totalSteps) * 100;
+    const path = location.pathname;
+    if (bar === 1) {
+      const bar1Routes = ['/loan/personal-details', '/loan/otp', '/loan/upload-documents', '/loan/personal-address', '/loan/employment-details'];
+      const index = bar1Routes.indexOf(path);
+      if (index >= 0) {
+        return (index / bar1Routes.length) * 100;
+      }
+    } else if (bar === 2) {
+      const bar2Routes = ['/loan/customise', '/loan/confirm-details', '/loan/check-address'];
+      const index = bar2Routes.indexOf(path);
+      if (index >= 0) {
+        return (index / bar2Routes.length) * 100;
+      }
+    }
+    return 0;
   };
 
   const progressPercentage = getProgressPercentage();
@@ -62,7 +79,7 @@ export const LoanProgressBar = () => {
                     width: step.number < currentStep 
                       ? '100%' 
                       : step.number === currentStep 
-                        ? `${(progressPercentage % 25)}%`
+                        ? `${(progressPercentage % (100 / totalSteps)) / (100 / totalSteps) * 100}%`
                         : '0%'
                   }}
                 />
