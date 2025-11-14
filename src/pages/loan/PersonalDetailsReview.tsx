@@ -23,48 +23,48 @@ export const PersonalDetailsReview = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-1 overflow-y-auto pt-20 pb-32">
-        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-8">
-          <div className="space-y-3 text-center">
-            <h1 className="text-3xl font-bold text-foreground tracking-tight">Confirm Your Details</h1>
-            <p className="text-muted-foreground text-base leading-relaxed">Please review the information fetched from Aadhaar</p>
+        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Confirm Your Details</h1>
+            <p className="text-muted-foreground text-sm">Please review the information fetched from Aadhaar</p>
           </div>
-          <div className="space-y-6">
-            <div className="flex justify-center mb-6">
-              <Avatar className="h-24 w-24">
+          <div className="space-y-4">
+            <div className="flex justify-center">
+              <Avatar className="h-16 w-16">
                 <AvatarImage src={aadhaarData.photo} alt={aadhaarData.name} />
-                <AvatarFallback className="text-2xl">
+                <AvatarFallback className="text-lg">
                   {aadhaarData.name.split(" ").map(n => n[0]).join("")}
                 </AvatarFallback>
               </Avatar>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="name" className="text-xs">Full Name</Label>
               <Input
                 id="name"
                 value={aadhaarData.name}
                 disabled
-                className="h-12 rounded-2xl border-2 bg-muted/50"
+                className="h-10 rounded-xl border bg-muted/50 text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="gender">Gender</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="gender" className="text-xs">Gender</Label>
               <Input
                 id="gender"
                 value={aadhaarData.gender}
                 disabled
-                className="h-12 rounded-2xl border-2 bg-muted/50"
+                className="h-10 rounded-xl border bg-muted/50 text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dob">Date of Birth</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="dob" className="text-xs">Date of Birth</Label>
               <Input
                 id="dob"
                 value={aadhaarData.dob}
                 disabled
-                className="h-12 rounded-2xl border-2 bg-muted/50"
+                className="h-10 rounded-xl border bg-muted/50 text-sm"
               />
             </div>
           </div>
@@ -74,7 +74,7 @@ export const PersonalDetailsReview = () => {
         <Button
           size="lg"
           onClick={handleConfirm}
-          className="w-full h-12 rounded-2xl"
+          className="w-full max-w-md mx-auto h-12 rounded-2xl block"
         >
           Confirm & Continue
         </Button>
