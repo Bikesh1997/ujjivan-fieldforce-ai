@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StepContainer } from "@/components/StepContainer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "lucide-react";
+import { Upload, Loader2 } from "lucide-react";
 
 export const UploadDocuments = () => {
   const navigate = useNavigate();
   const [panNumber, setPanNumber] = useState("");
   const [panFile, setPanFile] = useState<File | null>(null);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
   const validatePAN = (value: string) => {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -21,9 +23,29 @@ export const UploadDocuments = () => {
   };
 
   const handlePANChange = (value: string) => {
-    setPanNumber(value.toUpperCase());
+    const upperValue = value.toUpperCase();
+    setPanNumber(upperValue);
     setError("");
+    
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    const valid = panRegex.test(upperValue);
+    setIsValid(valid);
+    
+    if (valid && upperValue.length === 10) {
+      setError("");
+    } else if (upperValue.length === 10) {
+      setError("Please enter a valid PAN (Format: AAAAA9999A)");
+    }
   };
+
+  useEffect(() => {
+    if (isValid && panNumber.length === 10 && !isLoading) {
+      setIsLoading(true);
+      setTimeout(() => {
+        navigate("/loan/personal-address");
+      }, 1500);
+    }
+  }, [isValid, panNumber, navigate, isLoading]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -56,16 +78,33 @@ export const UploadDocuments = () => {
     >
       <div className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="pan">PAN Number</Label>
-          <Input
-            id="pan"
-            type="text"
-            value={panNumber}
-            onChange={(e) => handlePANChange(e.target.value)}
-            placeholder="AAAAA9999A"
-            maxLength={10}
-            className={error && !panFile ? "border-destructive" : ""}
-          />
+          <Label htmlFor="pan" className="text-sm font-medium">PAN Number *</Label>
+          <div className="relative">
+            <Input
+              id="pan"
+              type="text"
+              value={panNumber}
+              onChange={(e) => handlePANChange(e.target.value)}
+              placeholder="AAAAA9999A"
+              maxLength={10}
+              disabled={isLoading}
+              className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+                panNumber.length === 0
+                  ? "border-input"
+                  : isValid
+                  ? "border-success bg-success/5"
+                  : panNumber.length === 10
+                  ? "border-destructive bg-destructive/5"
+                  : "border-input"
+              }`}
+            />
+            {isLoading && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <Loader2 className="h-5 w-5 animate-spin text-primary" />
+              </div>
+            )}
+          </div>
+          {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
 
         <div className="flex items-center gap-4">
@@ -75,7 +114,7 @@ export const UploadDocuments = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="pan-upload">Upload PAN Image</Label>
+          <Label htmlFor="pan-upload" className="text-sm font-medium">Upload PAN Image</Label>
           <div className="relative">
             <Input
               id="pan-upload"
@@ -83,11 +122,13 @@ export const UploadDocuments = () => {
               accept="image/*,.pdf"
               onChange={handleFileChange}
               className="hidden"
+              disabled={isLoading}
             />
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full h-12 rounded-2xl"
               onClick={() => document.getElementById("pan-upload")?.click()}
+              disabled={isLoading}
             >
               <Upload className="w-4 h-4 mr-2" />
               {panFile ? panFile.name : "Choose File"}
@@ -95,10 +136,20 @@ export const UploadDocuments = () => {
           </div>
         </div>
 
-        {error && <p className="text-sm text-destructive">{error}</p>}
-
-        <Button size="lg" onClick={handleContinue} className="w-full">
-          Continue
+        <Button 
+          size="lg" 
+          onClick={handleContinue} 
+          className="w-full h-12 rounded-2xl"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            "Continue"
+          )}
         </Button>
       </div>
     </StepContainer>

@@ -25,6 +25,7 @@ import { EmploymentDetails } from "./pages/loan/EmploymentDetails";
 import { CustomiseLoan } from "./pages/loan/CustomiseLoan";
 import { ConfirmDetails } from "./pages/loan/ConfirmDetails";
 import { CheckAddress } from "./pages/loan/CheckAddress";
+import { LoanSuccess } from "./pages/loan/LoanSuccess";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -73,6 +74,7 @@ const App = () => (
                     <Route path="customise" element={<CustomiseLoan />} />
                     <Route path="confirm-details" element={<ConfirmDetails />} />
                     <Route path="check-address" element={<CheckAddress />} />
+                    <Route path="success" element={<LoanSuccess />} />
                   </Routes>
                 </div>
               }
