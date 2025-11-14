@@ -28,6 +28,40 @@ const Landing = () => {
         </div>
       </div>
 
+      {/* Loan Card */}
+      <div className="px-6 max-w-lg mx-auto animate-fade-in mb-6">
+        <Card className="p-6 shadow-lg border-2 hover:border-primary/20 transition-all duration-300">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Personal Loan</h2>
+              <p className="text-muted-foreground text-sm mb-1">Loan No: 679580450</p>
+              <p className="text-xl font-bold text-primary">₹1,60,000</p>
+            </div>
+            <div className="bg-primary/10 p-3 rounded-full">
+              <Landmark className="w-8 h-8 text-primary" />
+            </div>
+          </div>
+
+          <div className="flex gap-2 sm:gap-3 mt-6">
+            <Button
+              onClick={() => navigate("/loan/personal-details")}
+              className="flex-1 h-10 sm:h-12 text-sm sm:text-base font-semibold px-3 sm:px-4"
+            >
+              Apply
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1 h-10 sm:h-12 text-sm sm:text-base font-semibold px-3 sm:px-4"
+              onClick={() => {
+                // View details action
+              }}
+            >
+              View Details
+            </Button>
+          </div>
+        </Card>
+      </div>
+
       {/* Account Card */}
       <div className="px-6 max-w-lg mx-auto animate-fade-in">
         <Card className="p-6 shadow-lg border-2 hover:border-primary/20 transition-all duration-300">

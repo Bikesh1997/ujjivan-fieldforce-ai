@@ -1,0 +1,179 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { StepContainer } from "@/components/StepContainer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+export const EmploymentDetails = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    employmentType: "",
+    companyName: "",
+    industry: "",
+    organisationType: "",
+    officialEmail: "",
+    noOfficialEmail: false,
+    monthlySalary: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleInputChange = (field: string, value: string | boolean) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
+  const handleConfirm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.employmentType) newErrors.employmentType = "Please select employment type";
+    
+    if (!formData.companyName.trim() || !/^[a-zA-Z\s]+$/.test(formData.companyName)) {
+      newErrors.companyName = "Please enter a valid company name";
+    }
+    
+    if (!formData.industry) newErrors.industry = "Please select industry";
+    if (!formData.organisationType) newErrors.organisationType = "Please select organisation type";
+    
+    if (!formData.noOfficialEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!formData.officialEmail || !emailRegex.test(formData.officialEmail)) {
+        newErrors.officialEmail = "Please enter a valid official email";
+      }
+    }
+    
+    const salary = parseFloat(formData.monthlySalary);
+    if (!formData.monthlySalary || isNaN(salary) || salary <= 0) {
+      newErrors.monthlySalary = "Please enter a valid monthly salary";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    navigate("/loan/customise");
+  };
+
+  return (
+    <StepContainer
+      title="Employment Details"
+      subtitle="Please provide your employment information"
+    >
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="employmentType">Employment Type</Label>
+          <Select
+            value={formData.employmentType}
+            onValueChange={(value) => handleInputChange("employmentType", value)}
+          >
+            <SelectTrigger className={errors.employmentType ? "border-destructive" : ""}>
+              <SelectValue placeholder="Select employment type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="salaried">Salaried</SelectItem>
+              <SelectItem value="self-employed">Self Employed</SelectItem>
+              <SelectItem value="business">Business Owner</SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.employmentType && <p className="text-sm text-destructive">{errors.employmentType}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="companyName">Company Name</Label>
+          <Input
+            id="companyName"
+            value={formData.companyName}
+            onChange={(e) => handleInputChange("companyName", e.target.value)}
+            placeholder="Enter company name"
+            className={errors.companyName ? "border-destructive" : ""}
+          />
+          {errors.companyName && <p className="text-sm text-destructive">{errors.companyName}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="industry">Industry</Label>
+          <Select value={formData.industry} onValueChange={(value) => handleInputChange("industry", value)}>
+            <SelectTrigger className={errors.industry ? "border-destructive" : ""}>
+              <SelectValue placeholder="Select industry" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="it">Information Technology</SelectItem>
+              <SelectItem value="finance">Finance</SelectItem>
+              <SelectItem value="healthcare">Healthcare</SelectItem>
+              <SelectItem value="education">Education</SelectItem>
+              <SelectItem value="manufacturing">Manufacturing</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.industry && <p className="text-sm text-destructive">{errors.industry}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="organisationType">Organisation Type</Label>
+          <Select
+            value={formData.organisationType}
+            onValueChange={(value) => handleInputChange("organisationType", value)}
+          >
+            <SelectTrigger className={errors.organisationType ? "border-destructive" : ""}>
+              <SelectValue placeholder="Select organisation type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="private">Private Limited</SelectItem>
+              <SelectItem value="public">Public Limited</SelectItem>
+              <SelectItem value="government">Government</SelectItem>
+              <SelectItem value="ngo">NGO</SelectItem>
+              <SelectItem value="startup">Startup</SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.organisationType && <p className="text-sm text-destructive">{errors.organisationType}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="officialEmail">Official Email</Label>
+          <Input
+            id="officialEmail"
+            type="email"
+            value={formData.officialEmail}
+            onChange={(e) => handleInputChange("officialEmail", e.target.value)}
+            placeholder="Enter official email"
+            disabled={formData.noOfficialEmail}
+            className={errors.officialEmail ? "border-destructive" : ""}
+          />
+          {errors.officialEmail && <p className="text-sm text-destructive">{errors.officialEmail}</p>}
+        </div>
+
+        <div className="flex items-start space-x-2">
+          <Checkbox
+            id="noOfficialEmail"
+            checked={formData.noOfficialEmail}
+            onCheckedChange={(checked) => handleInputChange("noOfficialEmail", checked as boolean)}
+          />
+          <Label htmlFor="noOfficialEmail" className="text-sm leading-relaxed cursor-pointer">
+            I don't have official email ID
+          </Label>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="monthlySalary">Monthly Salary (₹)</Label>
+          <Input
+            id="monthlySalary"
+            type="tel"
+            inputMode="numeric"
+            value={formData.monthlySalary}
+            onChange={(e) => handleInputChange("monthlySalary", e.target.value.replace(/\D/g, ""))}
+            placeholder="Enter monthly salary"
+            className={errors.monthlySalary ? "border-destructive" : ""}
+          />
+          {errors.monthlySalary && <p className="text-sm text-destructive">{errors.monthlySalary}</p>}
+        </div>
+
+        <Button size="lg" onClick={handleConfirm} className="w-full">
+          Confirm
+        </Button>
+      </div>
+    </StepContainer>
+  );
+};
