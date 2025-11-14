@@ -10,16 +10,16 @@ export const PersonalAddress = () => {
   const navigate = useNavigate();
   const addressSectionRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
-    fullName: "",
-    gender: "",
-    dob: "",
-    email: "",
-    flatBuilding: "",
-    roadArea: "",
-    addressLine3: "",
-    landmark: "",
-    pincode: "",
-    city: "",
+    fullName: "Rajesh Kumar",
+    gender: "male",
+    dob: "15/08/1990",
+    email: "rajesh.kumar@email.com",
+    flatBuilding: "Shiv Residency",
+    roadArea: "MG Road",
+    addressLine3: "Near City Mall",
+    landmark: "Opposite Metro Pillar 21",
+    pincode: "560034",
+    city: "Bengaluru",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [hasScrolled, setHasScrolled] = useState(false);

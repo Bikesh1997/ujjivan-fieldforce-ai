@@ -98,25 +98,15 @@ export const LoanSuccess = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => navigate("/dashboard")}
-            className="flex-1 h-12 rounded-2xl"
-          >
-            View Dashboard
-          </Button>
-          <Button
-            size="lg"
-            onClick={() => navigate("/")}
-            className="flex-1 h-12 rounded-2xl"
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Go Home
-          </Button>
-        </div>
+        {/* Action Button */}
+        <Button
+          size="lg"
+          onClick={() => navigate("/")}
+          className="w-full h-12 rounded-2xl"
+        >
+          <Home className="w-4 h-4 mr-2" />
+          Go to Home
+        </Button>
       </div>
     </div>
   );
