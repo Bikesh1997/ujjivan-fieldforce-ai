@@ -64,21 +64,18 @@ const App = () => (
             <Route
               path="/loan/*"
               element={
-                <div className="min-h-screen flex flex-col">
-                  <LoanProgressBar />
-                  <Routes>
-                    <Route path="personal-details" element={<PersonalDetails />} />
-                    <Route path="otp" element={<LoanOTP />} />
-                    <Route path="personal-details-review" element={<PersonalDetailsReview />} />
-                    <Route path="upload-documents" element={<UploadDocuments />} />
-                    <Route path="personal-address" element={<PersonalAddress />} />
-                    <Route path="employment-details" element={<EmploymentDetails />} />
-                    <Route path="customise" element={<CustomiseLoan />} />
-                    <Route path="confirm-details" element={<ConfirmDetails />} />
-                    <Route path="check-address" element={<CheckAddress />} />
-                    <Route path="success" element={<LoanSuccess />} />
-                  </Routes>
-                </div>
+                <Routes>
+                  <Route path="personal-details" element={<><LoanProgressBar /><PersonalDetails /></>} />
+                  <Route path="otp" element={<><LoanProgressBar /><LoanOTP /></>} />
+                  <Route path="personal-details-review" element={<><LoanProgressBar /><PersonalDetailsReview /></>} />
+                  <Route path="upload-documents" element={<><LoanProgressBar /><UploadDocuments /></>} />
+                  <Route path="personal-address" element={<><LoanProgressBar /><PersonalAddress /></>} />
+                  <Route path="employment-details" element={<><LoanProgressBar /><EmploymentDetails /></>} />
+                  <Route path="customise" element={<><LoanProgressBar /><CustomiseLoan /></>} />
+                  <Route path="confirm-details" element={<><LoanProgressBar /><ConfirmDetails /></>} />
+                  <Route path="check-address" element={<><LoanProgressBar /><CheckAddress /></>} />
+                  <Route path="success" element={<LoanSuccess />} />
+                </Routes>
               }
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

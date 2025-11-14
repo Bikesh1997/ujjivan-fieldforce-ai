@@ -16,86 +16,92 @@ export const ConfirmDetails = () => {
   const [spouseLastName, setSpouseLastName] = useState("");
 
   return (
-    <StepContainer
-      title="Confirm Loan Details"
-      subtitle="Review your loan information"
-    >
-      <div className="space-y-6">
-        <div className="p-6 rounded-2xl bg-[#6D266D] shadow-lg space-y-3">
-          <div className="flex justify-between">
-            <span className="text-white/90">Amount Received</span>
-            <span className="font-bold text-white">₹3,00,000</span>
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 overflow-y-auto pt-20 pb-32">
+        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-8">
+          <div className="space-y-3 text-center">
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">Confirm Loan Details</h1>
+            <p className="text-muted-foreground text-base leading-relaxed">Review your loan information</p>
           </div>
-          <div className="flex justify-between">
-            <span className="text-white/90">Processing Fee</span>
-            <span className="font-bold text-white">₹8,000</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/90">GST</span>
-            <span className="font-bold text-white">₹1,000</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/90">EMI Protect Plan</span>
-            <span className="font-bold text-white">₹0</span>
-          </div>
-          <div className="border-t border-white/20 pt-2 mt-2">
-            <div className="flex justify-between text-lg">
-              <span className="font-semibold text-white">Total Loan Amount</span>
-              <span className="font-bold text-white">₹3,00,000</span>
+          <div className="space-y-6">
+            <div className="p-6 rounded-2xl bg-[#6D266D] shadow-lg space-y-3">
+              <div className="flex justify-between">
+                <span className="text-white/90">Amount Received</span>
+                <span className="font-bold text-white">₹3,00,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/90">Processing Fee</span>
+                <span className="font-bold text-white">₹8,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/90">GST</span>
+                <span className="font-bold text-white">₹1,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/90">EMI Protect Plan</span>
+                <span className="font-bold text-white">₹0</span>
+              </div>
+              <div className="border-t border-white/20 pt-2 mt-2">
+                <div className="flex justify-between text-lg">
+                  <span className="font-semibold text-white">Total Loan Amount</span>
+                  <span className="font-bold text-white">₹3,00,000</span>
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/90">EMI per Month</span>
+                <span className="font-bold text-white">₹10,000</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/90">Tenure</span>
+                <span className="font-bold text-white">36 months</span>
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/90">EMI per Month</span>
-            <span className="font-bold text-white">₹10,000</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-white/90">Tenure</span>
-            <span className="font-bold text-white">36 months</span>
+
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-secondary/20 transition-colors">
+                <span className="font-semibold">Know More</span>
+                <ChevronDown className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="space-y-4 mt-4">
+                <div className="space-y-2">
+                  <Label htmlFor="spouseFirstName" className="text-sm font-medium">Spouse First Name</Label>
+                  <Input
+                    id="spouseFirstName"
+                    value={spouseFirstName}
+                    onChange={(e) => setSpouseFirstName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
+                    placeholder="Enter spouse first name"
+                    className="h-12 rounded-2xl border-2"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="spouseLastName" className="text-sm font-medium">Spouse Last Name</Label>
+                  <Input
+                    id="spouseLastName"
+                    value={spouseLastName}
+                    onChange={(e) => setSpouseLastName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
+                    placeholder="Enter spouse last name"
+                    className="h-12 rounded-2xl border-2"
+                  />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="terms"
+                checked={termsAccepted}
+                onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                className="h-5 w-5"
+              />
+              <Label htmlFor="terms" className="text-sm font-medium leading-relaxed cursor-pointer">
+                I accept the Terms & Conditions
+              </Label>
+            </div>
           </div>
         </div>
-
-        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-xl hover:bg-secondary/20 transition-colors">
-            <span className="font-semibold">Know More</span>
-            <ChevronDown className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-4 mt-4">
-            <div className="space-y-2">
-              <Label htmlFor="spouseFirstName" className="text-sm font-medium">Spouse First Name</Label>
-              <Input
-                id="spouseFirstName"
-                value={spouseFirstName}
-                onChange={(e) => setSpouseFirstName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
-                placeholder="Enter spouse first name"
-                className="h-12 rounded-2xl border-2"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="spouseLastName" className="text-sm font-medium">Spouse Last Name</Label>
-              <Input
-                id="spouseLastName"
-                value={spouseLastName}
-                onChange={(e) => setSpouseLastName(e.target.value.replace(/[^a-zA-Z]/g, ""))}
-                placeholder="Enter spouse last name"
-                className="h-12 rounded-2xl border-2"
-              />
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        <div className="flex items-start space-x-3">
-          <Checkbox
-            id="terms"
-            checked={termsAccepted}
-            onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
-            className="h-5 w-5"
-          />
-          <Label htmlFor="terms" className="text-sm font-medium leading-relaxed cursor-pointer">
-            I accept the Terms & Conditions
-          </Label>
-        </div>
-
-        <div className="flex gap-3">
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 p-6 bg-background border-t border-border">
+        <div className="flex gap-3 max-w-md mx-auto">
           <Button
             variant="outline"
             size="lg"
@@ -114,6 +120,6 @@ export const ConfirmDetails = () => {
           </Button>
         </div>
       </div>
-    </StepContainer>
+    </div>
   );
 };

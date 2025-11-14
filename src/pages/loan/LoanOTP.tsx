@@ -78,48 +78,56 @@ export const LoanOTP = () => {
   };
 
   return (
-    <StepContainer title="Enter the OTP" subtitle="Code sent to your mobile number">
-      <div className="space-y-6">
-        <div className="flex justify-center gap-2 sm:gap-3" onPaste={handlePaste}>
-          {otp.map((digit, index) => (
-            <Input
-              key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
-              type="tel"
-              inputMode="numeric"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              className={`w-10 sm:w-14 h-10 sm:h-14 text-center text-lg sm:text-2xl font-bold rounded-xl sm:rounded-2xl border-2 transition-all duration-300 ${
-                digit
-                  ? "border-success bg-success/5 scale-105"
-                  : "border-input hover:border-primary/50"
-              }`}
-              autoFocus={index === 0}
-            />
-          ))}
-        </div>
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 overflow-y-auto pt-20 pb-32">
+        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-8">
+          <div className="space-y-3 text-center">
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">Enter the OTP</h1>
+            <p className="text-muted-foreground text-base leading-relaxed">Code sent to your mobile number</p>
+          </div>
+          <div className="space-y-6">
+            <div className="flex justify-center gap-2 sm:gap-3" onPaste={handlePaste}>
+              {otp.map((digit, index) => (
+                <Input
+                  key={index}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  className={`w-10 sm:w-14 h-10 sm:h-14 text-center text-lg sm:text-2xl font-bold rounded-xl sm:rounded-2xl border-2 transition-all duration-300 ${
+                    digit
+                      ? "border-success bg-success/5 scale-105"
+                      : "border-input hover:border-primary/50"
+                  }`}
+                  autoFocus={index === 0}
+                />
+              ))}
+            </div>
 
-        <div id="otp-success" className="hidden">
-          <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-success/10 border border-success animate-fade-in">
-            <CheckCircle2 className="h-5 w-5 text-success" />
-            <span className="text-success font-semibold">OTP Verified!</span>
+            <div id="otp-success" className="hidden">
+              <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-success/10 border border-success animate-fade-in">
+                <CheckCircle2 className="h-5 w-5 text-success" />
+                <span className="text-success font-semibold">OTP Verified!</span>
+              </div>
+            </div>
+
+            <div className="text-center space-y-3">
+              {resendTimer > 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  Resend OTP in <span className="font-semibold text-foreground">{resendTimer}s</span>
+                </p>
+              ) : (
+                <Button variant="link" onClick={handleResend} className="text-primary">
+                  Resend OTP
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-
-        <div className="text-center space-y-3">
-          {resendTimer > 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Resend OTP in <span className="font-semibold text-foreground">{resendTimer}s</span>
-            </p>
-          ) : (
-            <Button variant="link" onClick={handleResend} className="text-primary">
-              Resend OTP
-            </Button>
-          )}
-        </div>
       </div>
-    </StepContainer>
+    </div>
   );
 };

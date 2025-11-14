@@ -33,49 +33,54 @@ export const PersonalDetails = () => {
   };
 
   return (
-    <StepContainer
-      title="Enter Aadhaar linked mobile number"
-      subtitle="We'll send an OTP to this number for verification"
-    >
-      <div className="space-y-4">
-        <div className="relative">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-4 py-3 border border-input rounded-2xl bg-muted/50 font-medium">
-              +91
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 overflow-y-auto pt-20 pb-32">
+        <div className="w-full max-w-md mx-auto px-6 py-8 space-y-8">
+          <div className="space-y-3 text-center">
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">Enter Aadhaar linked mobile number</h1>
+            <p className="text-muted-foreground text-base leading-relaxed">We'll send an OTP to this number for verification</p>
+          </div>
+          <div className="space-y-4">
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-4 py-3 border border-input rounded-2xl bg-muted/50 font-medium">
+                  +91
+                </div>
+                <Input
+                  type="tel"
+                  placeholder="Enter Aadhaar-linked number"
+                  inputMode="numeric"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                  onKeyPress={handleKeyPress}
+                  maxLength={10}
+                  className={`flex-1 text-lg h-12 rounded-2xl border-2 transition-all duration-300 ${
+                    mobile.length === 0
+                      ? "border-input"
+                      : isValid
+                      ? "border-success bg-success/5 animate-success-pulse"
+                      : "border-destructive bg-destructive/5 animate-shake"
+                  }`}
+                  autoFocus
+                />
+              </div>
             </div>
-            <Input
-              type="tel"
-              placeholder="Enter Aadhaar-linked number"
-              inputMode="numeric"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
-              onKeyPress={handleKeyPress}
-              maxLength={10}
-              className={`flex-1 text-lg h-12 rounded-2xl border-2 transition-all duration-300 ${
-                mobile.length === 0
-                  ? "border-input"
-                  : isValid
-                  ? "border-success bg-success/5 animate-success-pulse"
-                  : "border-destructive bg-destructive/5 animate-shake"
-              }`}
-              autoFocus
-            />
+            <p className="text-sm text-muted-foreground text-center">
+              By proceeding, you agree to receive SMS updates
+            </p>
           </div>
         </div>
-
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 p-6 bg-background border-t border-border">
         <Button
           size="lg"
           onClick={handleSubmit}
           disabled={!isValid || isLoading}
-          className="w-full"
+          className="w-full h-12 rounded-2xl"
         >
           {isLoading ? "Continue..." : "Continue"}
         </Button>
-
-        <p className="text-sm text-muted-foreground text-center">
-          By proceeding, you agree to receive SMS updates
-        </p>
       </div>
-    </StepContainer>
+    </div>
   );
 };
