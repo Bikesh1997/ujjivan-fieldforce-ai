@@ -69,7 +69,7 @@ export const EmploymentDetails = () => {
             value={formData.employmentType}
             onValueChange={(value) => handleInputChange("employmentType", value)}
           >
-            <SelectTrigger className={errors.employmentType ? "border-destructive" : ""}>
+            <SelectTrigger className={`h-12 rounded-2xl border-2 ${errors.employmentType ? "border-destructive" : ""}`}>
               <SelectValue placeholder="Select employment type" />
             </SelectTrigger>
             <SelectContent>
@@ -88,7 +88,7 @@ export const EmploymentDetails = () => {
             value={formData.companyName}
             onChange={(e) => handleInputChange("companyName", e.target.value)}
             placeholder="Enter company name"
-            className={errors.companyName ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 ${errors.companyName ? "border-destructive" : ""}`}
           />
           {errors.companyName && <p className="text-sm text-destructive">{errors.companyName}</p>}
         </div>
@@ -96,7 +96,7 @@ export const EmploymentDetails = () => {
         <div className="space-y-2">
           <Label htmlFor="industry">Industry</Label>
           <Select value={formData.industry} onValueChange={(value) => handleInputChange("industry", value)}>
-            <SelectTrigger className={errors.industry ? "border-destructive" : ""}>
+            <SelectTrigger className={`h-12 rounded-2xl border-2 ${errors.industry ? "border-destructive" : ""}`}>
               <SelectValue placeholder="Select industry" />
             </SelectTrigger>
             <SelectContent>
@@ -117,7 +117,7 @@ export const EmploymentDetails = () => {
             value={formData.organisationType}
             onValueChange={(value) => handleInputChange("organisationType", value)}
           >
-            <SelectTrigger className={errors.organisationType ? "border-destructive" : ""}>
+            <SelectTrigger className={`h-12 rounded-2xl border-2 ${errors.organisationType ? "border-destructive" : ""}`}>
               <SelectValue placeholder="Select organisation type" />
             </SelectTrigger>
             <SelectContent>
@@ -140,7 +140,15 @@ export const EmploymentDetails = () => {
             onChange={(e) => handleInputChange("officialEmail", e.target.value)}
             placeholder="Enter official email"
             disabled={formData.noOfficialEmail}
-            className={errors.officialEmail ? "border-destructive" : ""}
+            className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+              formData.noOfficialEmail
+                ? "opacity-50"
+                : formData.officialEmail.length === 0
+                ? "border-input"
+                : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.officialEmail)
+                ? "border-success bg-success/5"
+                : "border-destructive bg-destructive/5"
+            }`}
           />
           {errors.officialEmail && <p className="text-sm text-destructive">{errors.officialEmail}</p>}
         </div>
