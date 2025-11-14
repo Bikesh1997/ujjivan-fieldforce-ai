@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { StepContainer } from "@/components/StepContainer";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ export const UploadDocuments = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const validatePAN = (value: string) => {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -23,9 +24,19 @@ export const UploadDocuments = () => {
   };
 
   const handlePANChange = (value: string) => {
-    const upperValue = value.toUpperCase();
+    const upperValue = value.toUpperCase().replace(/\s/g, '').slice(0, 10);
     setPanNumber(upperValue);
     setError("");
+    
+    // Update input mode dynamically based on position
+    if (inputRef.current) {
+      const len = upperValue.length;
+      if (len < 5 || len === 9) {
+        inputRef.current.inputMode = 'text';
+      } else if (len >= 5 && len < 9) {
+        inputRef.current.inputMode = 'numeric';
+      }
+    }
     
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     const valid = panRegex.test(upperValue);
@@ -84,6 +95,7 @@ export const UploadDocuments = () => {
               <Label htmlFor="pan" className="text-sm font-medium">PAN Number *</Label>
               <div className="relative">
                 <Input
+                  ref={inputRef}
                   id="pan"
                   type="text"
                   value={panNumber}
@@ -91,7 +103,8 @@ export const UploadDocuments = () => {
                   placeholder="AAAAA9999A"
                   maxLength={10}
                   disabled={isLoading}
-                  className={`h-12 rounded-2xl border-2 transition-all duration-300 ${
+                  inputMode="text"
+                  className={`h-12 rounded-2xl border-2 transition-all duration-300 text-center tracking-widest font-mono ${
                     panNumber.length === 0
                       ? "border-input"
                       : isValid
@@ -100,6 +113,7 @@ export const UploadDocuments = () => {
                       ? "border-destructive bg-destructive/5"
                       : "border-input"
                   }`}
+                  autoFocus
                 />
                 {isLoading && (
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
