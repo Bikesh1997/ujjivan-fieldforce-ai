@@ -68,7 +68,7 @@ export const LoanOTP = () => {
       }
 
       setTimeout(() => {
-        navigate("/loan/upload-documents");
+        navigate("/loan/personal-details-review");
       }, 800);
     }, 1500);
   };

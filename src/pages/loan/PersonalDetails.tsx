@@ -3,146 +3,78 @@ import { useNavigate } from "react-router-dom";
 import { StepContainer } from "@/components/StepContainer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 
 export const PersonalDetails = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    pincode: "",
-    mobile: "",
-    dob: "",
-    termsAccepted: false,
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [mobile, setMobile] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const validatePincode = (value: string) => {
-    if (!/^\d{6}$/.test(value)) {
-      return "Please enter a valid 6-digit pincode";
-    }
-    return "";
+  useEffect(() => {
+    const valid = /^[6-9]\d{9}$/.test(mobile);
+    setIsValid(valid);
+  }, [mobile]);
+
+  const handleSubmit = () => {
+    if (!isValid) return;
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/loan/otp");
+    }, 1000);
   };
 
-  const validateMobile = (value: string) => {
-    if (!/^\d{10}$/.test(value)) {
-      return "Please enter a valid 10-digit mobile number";
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && isValid) {
+      handleSubmit();
     }
-    return "";
-  };
-
-  const validateDOB = (value: string) => {
-    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
-      return "Please enter date in DD/MM/YYYY format";
-    }
-    const [day, month, year] = value.split("/").map(Number);
-    const date = new Date(year, month - 1, day);
-    if (date.getDate() !== day || date.getMonth() !== month - 1 || date.getFullYear() !== year) {
-      return "Please enter a valid date";
-    }
-    return "";
-  };
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
-
-  const handleContinue = () => {
-    const newErrors: Record<string, string> = {};
-    
-    const pincodeError = validatePincode(formData.pincode);
-    if (pincodeError) newErrors.pincode = pincodeError;
-
-    const mobileError = validateMobile(formData.mobile);
-    if (mobileError) newErrors.mobile = mobileError;
-
-    const dobError = validateDOB(formData.dob);
-    if (dobError) newErrors.dob = dobError;
-
-    if (!formData.termsAccepted) {
-      newErrors.terms = "Please accept terms and conditions";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    navigate("/loan/otp");
   };
 
   return (
-    <StepContainer title="Personal Details" subtitle="Please provide your details to proceed">
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="pincode">Pincode</Label>
-          <Input
-            id="pincode"
-            type="tel"
-            inputMode="numeric"
-            maxLength={6}
-            value={formData.pincode}
-            onChange={(e) => handleInputChange("pincode", e.target.value.replace(/\D/g, ""))}
-            placeholder="Enter 6-digit pincode"
-            className={errors.pincode ? "border-destructive" : ""}
-          />
-          {errors.pincode && <p className="text-sm text-destructive">{errors.pincode}</p>}
+    <StepContainer
+      title="Enter Aadhaar linked mobile number"
+      subtitle="We'll send an OTP to this number for verification"
+    >
+      <div className="space-y-4">
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-4 py-3 border border-input rounded-2xl bg-muted/50 font-medium">
+              +91
+            </div>
+            <Input
+              type="tel"
+              placeholder="Enter Aadhaar-linked number"
+              inputMode="numeric"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
+              onKeyPress={handleKeyPress}
+              maxLength={10}
+              className={`flex-1 text-lg h-12 rounded-2xl border-2 transition-all duration-300 ${
+                mobile.length === 0
+                  ? "border-input"
+                  : isValid
+                  ? "border-success bg-success/5 animate-success-pulse"
+                  : "border-destructive bg-destructive/5 animate-shake"
+              }`}
+              autoFocus
+            />
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="mobile">Mobile Number</Label>
-          <Input
-            id="mobile"
-            type="tel"
-            inputMode="numeric"
-            maxLength={10}
-            value={formData.mobile}
-            onChange={(e) => handleInputChange("mobile", e.target.value.replace(/\D/g, ""))}
-            placeholder="Enter 10-digit mobile number"
-            className={errors.mobile ? "border-destructive" : ""}
-          />
-          {errors.mobile && <p className="text-sm text-destructive">{errors.mobile}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="dob">Date of Birth</Label>
-          <Input
-            id="dob"
-            type="text"
-            value={formData.dob}
-            onChange={(e) => {
-              let value = e.target.value.replace(/\D/g, "");
-              if (value.length > 2 && value.length <= 4) {
-                value = value.slice(0, 2) + "/" + value.slice(2);
-              } else if (value.length > 4) {
-                value = value.slice(0, 2) + "/" + value.slice(2, 4) + "/" + value.slice(4, 8);
-              }
-              handleInputChange("dob", value);
-            }}
-            placeholder="DD/MM/YYYY"
-            maxLength={10}
-            className={errors.dob ? "border-destructive" : ""}
-          />
-          {errors.dob && <p className="text-sm text-destructive">{errors.dob}</p>}
-        </div>
-
-        <div className="flex items-start space-x-2">
-          <Checkbox
-            id="terms"
-            checked={formData.termsAccepted}
-            onCheckedChange={(checked) =>
-              setFormData((prev) => ({ ...prev, termsAccepted: checked as boolean }))
-            }
-          />
-          <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
-            I accept the Terms & Conditions
-          </Label>
-        </div>
-        {errors.terms && <p className="text-sm text-destructive">{errors.terms}</p>}
-
-        <Button size="lg" onClick={handleContinue} className="w-full">
-          Continue
+        <Button
+          size="lg"
+          onClick={handleSubmit}
+          disabled={!isValid || isLoading}
+          className="w-full"
+        >
+          {isLoading ? "Continue..." : "Continue"}
         </Button>
+
+        <p className="text-sm text-muted-foreground text-center">
+          By proceeding, you agree to receive SMS updates
+        </p>
       </div>
     </StepContainer>
   );

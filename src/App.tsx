@@ -18,6 +18,7 @@ import { NomineeAndTerms } from "./pages/onboarding/NomineeAndTerms";
 import { AccountSuccess } from "./pages/onboarding/AccountSuccess";
 import { KYCPrompt } from "./pages/onboarding/KYCPrompt";
 import { PersonalDetails } from "./pages/loan/PersonalDetails";
+import { PersonalDetailsReview } from "./pages/loan/PersonalDetailsReview";
 import { LoanOTP } from "./pages/loan/LoanOTP";
 import { UploadDocuments } from "./pages/loan/UploadDocuments";
 import { PersonalAddress } from "./pages/loan/PersonalAddress";
@@ -68,6 +69,7 @@ const App = () => (
                   <Routes>
                     <Route path="personal-details" element={<PersonalDetails />} />
                     <Route path="otp" element={<LoanOTP />} />
+                    <Route path="personal-details-review" element={<PersonalDetailsReview />} />
                     <Route path="upload-documents" element={<UploadDocuments />} />
                     <Route path="personal-address" element={<PersonalAddress />} />
                     <Route path="employment-details" element={<EmploymentDetails />} />
